@@ -22,7 +22,7 @@ const pizzaData = [
       ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
       price: 12,
       photoName: "pizzas/spinaci.jpg",
-      soldOut: false,
+      soldOut: true,
     },
     {
       name: "Pizza Funghi",
@@ -36,7 +36,7 @@ const pizzaData = [
       ingredients: "Tomato, mozarella, and pepperoni",
       price: 15,
       photoName: "pizzas/salamino.jpg",
-      soldOut: true,
+      soldOut: false,
     },
     {
       name: "Pizza Prosciutto",
@@ -79,7 +79,7 @@ function Menu() {
        
         <ul className="pizzas">
             { pizzaData.map( (pizza) => (
-                <Pizza pizzaItem = {pizza} />
+                !pizza.soldOut && <Pizza pizzaItem = {pizza} />
             ))}
         </ul>
         </main>
@@ -89,6 +89,9 @@ function Menu() {
 
 function Pizza(props) {
     console.log(props);
+
+   // if( props.pizzaItem.soldOut == true ) return null;
+
     return (
         <li>
             <div className="pizza">
@@ -108,15 +111,19 @@ function Footer() {
     const hour = new Date().getHours();
     const openHour = 8;
     const closeHour = 22;
-    const isOpen = (hour >= openHour && hour <= closeHour );
+    const isOpen = (hour >= openHour && hour < closeHour );
 
     return(
         <footer className="footer">
-            {isOpen && (
+            {isOpen ? (
                 <div className="order">
                     <p>We are open until {closeHour}:00. Come and visit us or order online.</p>
                     <button className="btn">Order Now!</button>
                 </div>
+            ) : (
+                <p>
+                    We're happy to welcome you betwwen {openHour}:00 and {closeHour}:00.
+                </p>
             )}
         </footer>
     );
